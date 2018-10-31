@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>ORSToken - Demo</title>
+
+  <!-- Bootstrap -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-8 col-sm-push-2">
+        <h1 class="text-center">ORSToken</h1>
+        <hr />
+        <br />
+      </div>
+    </div>
+
+    <div id="petsRow" class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">User</h3>
+          </div>
+          <div class="panel-body">
+            <h4>Approve</h4>
+            <div class="form-group">
+              <label>PaymentInORS Contract Address</label>
+              <input type="text" class="form-control" id="TTApproveAddress" placeholder="Contract Address" readonly />
+            </div>
+            <div class="form-group">
+
+              <input type="text" class="form-control" id="TTApproveAmount" placeholder="Amount" />
+            </div>
+            <div class="form-group">
+              <button class="btn btn-danger" id="approveButton" type="button">Approve</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">PaymentInORS Contract</h3>
+          </div>
+          <div class="panel-body">
+            <h4>Transfer</h4>
+            <div class="form-group">
+              <label>From Address</label>
+              <input type="text" class="form-control" id="TTTransferFromAddress" placeholder="From Address" />
+            </div>
+            <div class="form-group">
+              <label>To Address</label>
+
+              <input type="text" class="form-control" id="TTTransferToAddress" placeholder="To Address" />
+            </div>
+            <div class="form-group">
+              <label>No. of Tokens</label>
+
+              <input type="text" class="form-control" id="TTTransferFTAmount" placeholder="Amount" />
+            </div>
+            <div class="form-group">
+
+              <button class="btn btn-danger" id="transferButton" type="button">Transfer</button>
+            </div>
+
+            <h4>Set ORSToken Contract Address</h4>
+            <div class="form-group">
+
+              <input type="text" class="form-control" id="TTSmartContractAddress" placeholder="Contract Address" />
+            </div>
+            <div class="form-group">
+
+              <button class="btn btn-danger" id="setContractAddressButton" type="button">Set ContractAddress</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">ORSToken Smart Contract</h3>
+          </div>
+          <div class="panel-body">
+            <h4></h4>
+            <div class="form-group">
+
+              <button class="btn btn-danger" id="pauseButton" type="button">pause</button>
+              <button class="btn btn-danger" id="unpauseButton" type="button">unpause</button>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-primary" id="totalSupplyButton" type="button">Total Supply</button>
+              <strong>Total Supply</strong>: <span id="TTSupply"></span> ORS<br /><br />
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Mint ORSTokens</h3>
+              </div>
+              <div class="panel-body">
+                <h4></h4>
+
+                <div class="form-group">
+                  <label>Address to Mint</label>
+                  <input type="text" class="form-control" id="TTMintAddress" placeholder="Address" />
+                </div>
+                <div class="form-group">
+                  <label>No. of Tokens</label>
+                  <input type="text" class="form-control" id="TTMintAmount" placeholder="Amount" />
+                </div>
+
+                <button class="btn btn-danger" id="mintTokensButton" type="button">Mint Tokens</button>
+
+              </div>
+            </div>
+            <div class="form-group">
+              <button class="btn btn-danger" id="finishMintingButton" type="button">Finish Minting</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Get Balance</h3>
+          </div>
+          <div class="panel-body">
+            <strong>Balance</strong>: <span id="TTBalance"></span> ORS<br /><br />
+            <div class="form-group">
+              <input type="text" class="form-control" id="TTBalanceAddress" placeholder="Address" />
+            </div>
+            <div class="form-group">
+
+              <button class="btn btn-primary" id="balanceButton" type="button">Balance</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>

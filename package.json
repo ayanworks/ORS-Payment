@@ -1,0 +1,32 @@
+{
+    "name": "ORS-Payment",
+    "version": "2.0.0",
+    "description": "ORS Token Payment Smart Contracts",
+    "author": "Sicos",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ORSGroup/ORS-Tokensale.git"
+    },
+    "scripts": {
+        "dev": "lite-server",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "devDependencies": {
+        "lite-server": "^2.3.0"
+    },
+    "dependencies": {
+        "chai": "4.1.2",
+        "chai-as-promised": "7.1.1",
+        "chai-bignumber": "2.0.2",
+        "ethereumjs-abi": "0.6.5",
+        "ethereumjs-util": "5.2.0",
+        "ganache-cli": "6.1.0",
+        "solhint": "1.1.10",
+        "solium": "1.1.7",
+        "truffle": "4.1.8",
+        "truffle-flattener": "1.2.5",
+        "web3": "^1.0.0-beta.36",
+        "zeppelin-solidity": "1.9.0"
+    }
+}
