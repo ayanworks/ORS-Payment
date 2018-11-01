@@ -31,6 +31,7 @@ ORS Payment Contract
 #approve()
 1) Select Customer's Address in Metamask, which will be used for approval.
 2) Add number of tokens to 'amount' field of Customer and click Approve.
+
 #transferFrom()
 1) Select Contract owners(accounts[0]) address in Metamask.
 2) In PaymentInORS Contract add the From address(Customer's address), To Address(ORS Group address) and Amount (No. of Tokens allowed) to transfer and click Transfer.
