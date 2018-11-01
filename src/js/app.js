@@ -26,7 +26,7 @@ App = {
     $.getJSON('ORSToken.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract.
       var ORSTokenArtifact = data;
-      console.log("ORSToken", JSON.stringify(data.abi));
+      // console.log("ORSToken", JSON.stringify(data.abi));
       App.contracts.ORSToken = TruffleContract(ORSTokenArtifact);
 
       // Set the provider for our contract.
@@ -34,6 +34,7 @@ App = {
       // App.getMint();
       // Use our contract to retieve and mark the adopted pets.
       // return App.getBalances();
+      App.handleGetTokenStatus();
       return App.getTotalSupply();
     });
 
@@ -53,7 +54,7 @@ App = {
       }).catch(function (err) {
         console.log(err.message);
       });
-      
+
     });
     return App.bindEvents();
   },
@@ -99,6 +100,7 @@ App = {
         return orsTokenInstance.pause({ from: account });
       }).then(function (result) {
         console.log("Pause", result.receipt);
+        App.handleGetTokenStatus();
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -123,6 +125,7 @@ App = {
         return orsTokenInstance.unpause({ from: account });
       }).then(function (result) {
         console.log("unpause", result.receipt);
+        App.handleGetTokenStatus();
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -361,18 +364,30 @@ App = {
     });
   },
 
-  handleGetContractAddress: function () {
-   
-    var paymentInORSInstance;
+  handleGetTokenStatus: function () {
+    console.log('Get Token status...');
+
+    var orsTokenInstance;
 
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
 
-      var account = accounts[0];
+      App.contracts.ORSToken.deployed().then(function (instance) {
+        orsTokenInstance = instance;
 
-      
+        return orsTokenInstance.paused();
+      }).then(function (result) {
+        console.log("pause: ", result);
+        $("#contractStatus").text(result == true? "paused": "unpaused");
+        return orsTokenInstance.mintingFinished();
+      }).then(function (result) {
+        console.log("mintingFinished: ", result);
+        $("#contractMintStatus").text(result == true? "off": "on")
+      }).catch(function (err) {
+        console.log(err.message);
+      });
     });
   },
 
