@@ -82,6 +82,11 @@ App = {
 
   },
 
+  handleRadioChange: function () {
+    
+  },
+
+
   handlePause: function () {
     console.log('Pause...');
 
@@ -380,11 +385,11 @@ App = {
         return orsTokenInstance.paused();
       }).then(function (result) {
         console.log("pause: ", result);
-        $("#contractStatus").text(result == true? "paused": "unpaused");
+        $("#contractStatus").text(result == true ? "paused" : "unpaused");
         return orsTokenInstance.mintingFinished();
       }).then(function (result) {
         console.log("mintingFinished: ", result);
-        $("#contractMintStatus").text(result == true? "off": "on")
+        $("#contractMintStatus").text(result == true ? "off" : "on")
       }).catch(function (err) {
         console.log(err.message);
       });

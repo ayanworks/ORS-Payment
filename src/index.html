@@ -21,139 +21,190 @@
 
 <body>
   <div class="container">
-    <div class="row">
-      <div class="col-xs-12 col-sm-8 col-sm-push-2">
-        <h1 class="text-center">ORSToken</h1>
-        <hr />
-        <br />
+
+    <div id="content">
+      <div class="row">
+        <div class="col-xs-6 col-sm-12 col-md-6">
+          <div class="react-grid-item _full-width double-width   cssTransforms  ">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-6 col-sm-12 col-md-6">
+                  <h1 class="text-center">Customer</h1>
+                  <hr />
+                  <br />
+                  <div class="form-group">
+                    <label class="radio-inline">
+                      <input type="radio" name="paytype" value="ORS" />ORS
+                    </label>
+                    <label class="radio-inline">
+                      <input type="radio" name="paytype" value="ETH" />ETH
+                    </label>
+                  </div>
+                  <div class="row">
+                    <div class="form-group">
+                      <strong>Amount to pay: <span id="amountToPay"></span></strong>
+                    </div>
+
+                    <div class="container-form">
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>First name <em>*</em> </label>
+                            <input class="form-control" type="text" name="firstname" placeholder="First name" required="" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Last name <em>*</em> </label>
+                            <input class="form-control" type="text" name="lastname" placeholder="Last name" required="" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Email Address <em>*</em> </label>
+                            <input class="form-control" type="text" name="email" placeholder="Email address" required="" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Mobile Number <em>*</em> </label>
+                            <input class="form-control" type="text" name="mobile" placeholder="Mobile Number" required="" />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Address</label>
+                            <input class="form-control" type="text" name="address" placeholder="Address" required="" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>State</label>
+                            <input class="form-control" type="text" name="state" placeholder="State" required="" />
+                          </div>
+
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>City</label>
+                            <input class="form-control" type="text" name="city" placeholder="City" required="" />
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <label>Zip</label>
+                            <input class="form-control" type="text" name="code" placeholder="Zip" required="" />
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="userSignedIn">
+
+                      <div class="form-group">
+                        <label>Pay from</label>
+                        <div class="valueFieldRO">
+                          <span class="remaining" id="payFromAddress">
+                          </span>
+                          <span class="remaining" id="payFromAddressBalance">
+                          </span>
+                          <span class="remaining" id="selectedCurrency">
+                          </span>
+                        </div>
+
+                      </div>
+                      <div class="form-group">
+                        <label>Pay to ORS</label>
+                        <div class="valueFieldRO">
+                          <span id="payToAddress">
+                          </span>
+                        </div>
+                      </div>
+                      <div class="text-right form-group">
+                        <button class="btn btn-default pull-left">Cancel</button>
+                        <button class="btn btn-primary btn-main " id="buttonApprove">Make Payment</button>
+                      </div>
+                      <div class="transactionStatus" style="margin-top:'15px'">
+                        Transaction Status:<span class="status success" id="customerTxStatus"> </span><br />
+                        Transaction Hash: <a href="#" target="_blank"><span id="customerTxHash"></span></a>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-6 col-sm-12 col-md-6">
+          <div class="react-grid-item _full-width double-width   cssTransforms  ">
+            <div class="container">
+              <div class="row">
+                <div class="col-xs-6 col-sm-12 col-md-6">
+                  <h1 class="text-center">CH Admin</h1>
+                  <small><strong>Note:</strong> Please select Admin Address in Metamask.</small><br /><br />
+                  <strong>Admin Address:</strong> {this.state.orsTokenContractOwnerAddress} <br />
+                  <strong>ORS Balance:</strong> {this.state.orsTokenBalance} ORS<br />
+                  <strong>ETH Balance:</strong> {this.state.orsETHBalance} ETH
+                  <hr />
+                  <br />
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="panel-body">
+                        <div class="transactionStatus" style="margin-top: '15px'">
+                          Transaction Status:<span class="status success"> {this.state.adminTxStatus}</span><br />
+                          Transaction Hash: <a href="#" target="_blank"> {this.state.adminTxHash}</a>
+                        </div>
+                        <br />
+                        <table class="table table-bordered">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>From</th>
+                              <th>Tokens</th>
+                              <th>Actions</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            {this.state.data.map(d => {
+                            return (<tr key={d.number}>
+                              <td>{d.number}</td>
+                              <td>{d.from}</td>
+                              <td>{d.tokens}</td>
+                              <td>
+                                <button>Transfer</button>
+                              </td>
+                            </tr>
+                            )
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div id="petsRow" class="row">
-      <div class="col-sm-6 col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Customer (account[1])</h3>
-          </div>
-          <div class="panel-body">
-            <h4>Approve</h4>
-            <div class="form-group">
-              <label>PaymentInORS Contract Address</label>
-              <input type="text" class="form-control" id="TTApproveAddress" placeholder="Contract Address" readonly />
-            </div>
-            <div class="form-group">
-
-              <input type="text" class="form-control" id="TTApproveAmount" placeholder="Amount" />
-            </div>
-            <div class="form-group">
-              <button class="btn btn-danger" id="approveButton" type="button">Approve</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">PaymentInORS Contract (account[0])</h3>
-          </div>
-          <div class="panel-body">
-            <h4>Transfer</h4>
-            <div class="form-group">
-              <label>From Address</label>
-              <input type="text" class="form-control" id="TTTransferFromAddress" placeholder="From Address" />
-            </div>
-            <div class="form-group">
-              <label>To Address</label>
-
-              <input type="text" class="form-control" id="TTTransferToAddress" placeholder="To Address" />
-            </div>
-            <div class="form-group">
-              <label>No. of Tokens</label>
-
-              <input type="text" class="form-control" id="TTTransferFTAmount" placeholder="Amount" />
-            </div>
-            <div class="form-group">
-
-              <button class="btn btn-danger" id="transferButton" type="button">Transfer</button>
-            </div>
-
-            <h4>Set ORSToken Contract Address</h4>
-            <div class="form-group">
-
-              <input type="text" class="form-control" id="TTSmartContractAddress" placeholder="Contract Address" />
-            </div>
-            <div class="form-group">
-
-              <button class="btn btn-danger" id="setContractAddressButton" type="button">Set ContractAddress</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">ORSToken Smart Contract (account[0])</h3>
-          </div>
-          <div class="panel-body">
-            <h4><strong>Contract is <span id="contractStatus"></span></strong></h4>
-            <div class="form-group">
-              <button class="btn btn-danger" id="pauseButton" type="button">pause</button>
-              <button class="btn btn-danger" id="unpauseButton" type="button">unpause</button>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-primary" id="totalSupplyButton" type="button">Total Supply</button>
-              <strong>Total Supply</strong>: <span id="TTSupply"></span> ORS<br /><br />
-            </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title">Mint ORSTokens</h3>
-              </div>
-              <div class="panel-body">
-                <h4></h4>
-
-                <div class="form-group">
-                  <label>Address to Mint (Customer)</label>
-                  <input type="text" class="form-control" id="TTMintAddress" placeholder="Customer Address" />
-                </div>
-                <div class="form-group">
-                  <label>No. of Tokens</label>
-                  <input type="text" class="form-control" id="TTMintAmount" placeholder="Amount" />
-                </div>
-
-                <button class="btn btn-danger" id="mintTokensButton" type="button">Mint Tokens</button>
-
-              </div>
-            </div>
-            <div class="form-group">
-              <button class="btn btn-danger" id="finishMintingButton" type="button">Finish Minting</button>
-              <strong>Minting is <span id="contractMintStatus"></span></strong>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-sm-6 col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Get Balance</h3>
-          </div>
-          <div class="panel-body">
-            <strong>Balance</strong>: <span id="TTBalance"></span> ORS<br /><br />
-            <div class="form-group">
-              <input type="text" class="form-control" id="TTBalanceAddress" placeholder="Address" />
-            </div>
-            <div class="form-group">
-
-              <button class="btn btn-primary" id="balanceButton" type="button">Balance</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-    </div>
   </div>
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
