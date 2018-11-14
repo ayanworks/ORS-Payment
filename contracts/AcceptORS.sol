@@ -9,6 +9,8 @@ contract ORSTokenInterface {
 
 contract AcceptORS is Ownable {
     
+    event TransferFrom(address _from, address _to, uint256 _value, address _sender);
+
     ORSTokenInterface orsTokenContract;
 
     function setORSTokenContractAddress(address _address) external onlyOwner {
@@ -16,6 +18,7 @@ contract AcceptORS is Ownable {
     }
 
     function acceptAndTransfer(address _from, address _to, uint256 _value) external onlyOwner returns(bool){
+      //  emit TransferFrom(_from, _to, _value, msg.sender);
         return orsTokenContract.transferFrom(_from, _to, _value);
     }
 

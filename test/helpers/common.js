@@ -121,6 +121,7 @@ module.exports = (() => {
             // Nevertheless, post-Byzantium Ganache throws, too.
             if (message.includes("invalid opcode")
              || message.includes("invalid jump")
+             || message.includes("sender account not recognized")
              || message.includes("vm exception while processing transaction: revert")) {
                 return; // pre-Byzantium rejection
             }
