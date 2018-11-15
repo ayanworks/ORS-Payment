@@ -9,30 +9,30 @@ module.exports = (() => {
 
     // Some simple functions to translate durations to seconds.
     const duration = (() => {
-        const secs  = n => n;
-        const mins  = n => n * secs(60);
+        const secs = n => n;
+        const mins = n => n * secs(60);
         const hours = n => n * mins(60);
-        const days  = n => n * hours(24);
+        const days = n => n * hours(24);
         const weeks = n => n * days(7);
         const years = n => n * days(365);
 
-        return {secs, seconds: secs, mins, minutes: mins, hours, days, weeks, years};
+        return { secs, seconds: secs, mins, minutes: mins, hours, days, weeks, years };
     })();
 
     // Some simple functions to translate currencies to wei.
     const currency = (() => {
         const $ = (n, m) => (new web3.BigNumber(n)).mul(m).trunc();
 
-        const wei      = n => $(n,  1e0);
-        const ada      = n => $(n,  1e3);
-        const babbage  = n => $(n,  1e6);
-        const gwei     = n => $(n,  1e9);
-        const szabo    = n => $(n, 1e12);
-        const finney   = n => $(n, 1e15);
-        const ether    = n => $(n, 1e18);
+        const wei = n => $(n, 1e0);
+        const ada = n => $(n, 1e3);
+        const babbage = n => $(n, 1e6);
+        const gwei = n => $(n, 1e9);
+        const szabo = n => $(n, 1e12);
+        const finney = n => $(n, 1e15);
+        const ether = n => $(n, 1e18);
         const einstein = n => $(n, 1e21);
 
-        return {wei, ada, babbage, gwei, szabo, finney, mether: finney, ether, einstein};
+        return { wei, ada, babbage, gwei, szabo, finney, mether: finney, ether, einstein };
     })();
 
     // Logging colors.
@@ -42,9 +42,9 @@ module.exports = (() => {
 
     const log = message => {
         console.log(" ".repeat(8)
-                    + COLOR_CYAN + "→ "
-                    + COLOR_GRAY + message
-                    + COLOR_RESET);
+            + COLOR_CYAN + "→ "
+            + COLOR_GRAY + message
+            + COLOR_RESET);
     };
 
     // Try to execute a transaction and log its gas usage to console.
@@ -62,8 +62,8 @@ module.exports = (() => {
             let tx = await promise;
 
             log(message + (tx.hasOwnProperty("receipt")
-                           ? ": " + tx.receipt.gasUsed
-                           : " unknown due to missing receipt"));
+                ? ": " + tx.receipt.gasUsed
+                : " unknown due to missing receipt"));
 
             return tx;
         }
@@ -85,11 +85,10 @@ module.exports = (() => {
 
             if (tx.hasOwnProperty("receipt")) {
                 let receipt = tx.receipt;
-
                 // Unfortunately, all cases where seen in the wild.
                 if (receipt.status === 0
-                 || receipt.status === "0x"
-                 || receipt.status === "0x0") {
+                    || receipt.status === "0x"
+                    || receipt.status === "0x0") {
                     return; // post-Byzantium rejection
                 }
 
@@ -116,13 +115,14 @@ module.exports = (() => {
         }
         catch (error) {
             let message = error.toString().toLowerCase();
-
+            
             // That's ugly, older pre-Byzantium TestRPC just throws.
             // Nevertheless, post-Byzantium Ganache throws, too.
             if (message.includes("invalid opcode")
-             || message.includes("invalid jump")
-             || message.includes("sender account not recognized")
-             || message.includes("vm exception while processing transaction: revert")) {
+                || message.includes("invalid jump")
+                || message.includes("sender account not recognized")
+                || message.includes("sender doesn't have enough funds to send tx")
+                || message.includes("vm exception while processing transaction: revert")) {
                 return; // pre-Byzantium rejection
             }
 
@@ -143,7 +143,7 @@ module.exports = (() => {
             let message = error.toString().toLowerCase();
 
             if (message.includes("the contract code couldn't be stored")
-             || message.includes("vm exception while processing transaction: revert")) {
+                || message.includes("vm exception while processing transaction: revert")) {
                 return;
             }
 
@@ -155,20 +155,20 @@ module.exports = (() => {
 
     const increaseTime = secs =>
         new Promise((resolve, reject) => {
-                web3.currentProvider.sendAsync(
-                    {jsonrpc: "2.0", method: "evm_increaseTime", params: [secs], id: now()},
-                    error => {
-                        if (error) { reject(error); }
-                        else {
-                            web3.currentProvider.sendAsync(
-                                {jsonrpc: "2.0", method: "evm_mine", id: now() + 1},
-                                (error, result) => {
-                                    if (error) { reject(error); }
-                                    else { resolve(result); }
-                                });
-                        }
-                    });
-            });
+            web3.currentProvider.sendAsync(
+                { jsonrpc: "2.0", method: "evm_increaseTime", params: [secs], id: now() },
+                error => {
+                    if (error) { reject(error); }
+                    else {
+                        web3.currentProvider.sendAsync(
+                            { jsonrpc: "2.0", method: "evm_mine", id: now() + 1 },
+                            (error, result) => {
+                                if (error) { reject(error); }
+                                else { resolve(result); }
+                            });
+                    }
+                });
+        });
 
     // Create a random address.
     const randomAddr = () => {

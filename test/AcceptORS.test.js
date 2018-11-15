@@ -86,7 +86,6 @@ contract("AcceptORS", ([owner, holder, trustee, recipient, anyone]) => {
             await token.finishMinting({ from: owner });
         });
 
-
         describe('transfer tokens', () => {
 
             it("permits to transfer from", async () => {
